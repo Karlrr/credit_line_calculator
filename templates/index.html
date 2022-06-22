@@ -2,23 +2,122 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+
     <title>한도 계산 페이지</title>
 </head>
+
+<style>
+    .wrong{
+
+    }
+</style>
+
 <body>
     <!-- 입력값 -->
-    <p>1. 실사업자 여부</p>
-    <p>2. 지역(수도권, 5대광역시 외 불가)</p>
-    <p>3. 공급면적 45평 여부</p>
-    <p>4. 갑구침해(세금 1년 / 그외 3년)</p>
-    <p>5. 선순위 금융사(시중은행, 보험사 외 불가)</p>
-    <p>6. 담제자, 채무자 만 나이 65세 이상 여부</p>
-    <p>7. 세입자 여부(월세, 전세; 월세 불가)</p>
-    <p>8. 세입자 동의 여부</p>
-    <p>9. 세입자, 은행 뒤 3순위 불가</p>
-    <p>10. KB시세(주소 넣으면 바로 KB시세 연결되서 확인할 수 있어야 함)</p>
-    <p>11. 기존대출 설정액(여러 개 추가할 수 있어야 함)</p>
-    <p>10~11번만 숫자 자료 넣는 거고 나머지는 boolean</p>
+
+    <div>
+        <p>1. 실사업자 여부</p>
+        <button class="bbtn">네</button>
+        <button class="wrong_btn" id="wrong_button_1">아니요</button>
+    </div>
+    <div>
+        <p>2. 지역(수도권, 5대광역시 외 불가)★</p>
+        <button>서울, 경기, 인천, 부산, 대구, 대전, 광주, 울산?</button>
+        <button class="wrong_btn">아니요</button>
+    </div>
+    <div>
+        <p>3. 공급면적 45평 미만 여부★</p>
+        <button class="bbtn">네</button>
+        <button>아니요</button>
+    </div>
+    <!-- 3번 아니요 일때만 펼쳐지게 자바스크립트 적용 -->
+    <div>
+        <p>3-2. 공급면적 45평 초과 일때 우대 지역★</p>
+        <button class="bbtn">서울, 하남, 동안구, 분당구, 광명</button>
+        <button>그 외</button>
+    </div>
+    <div>
+        <p>4. 급지★</p>
+        <button class="bbtn">A</button>
+        <button class="bbtn">B</button>
+        <!-- 급지에 마우스 갖다대면 A급지나 B급지 쭉 나오게 하면 좋을 듯-->
+    </div>
+    <div>
+        <p>4. 갑구침해(세금 1년 / 그외 3년)</p>
+        <button class="bbtn">없음</button>
+        <button class="wrong_btn">있음</button>
+    </div>
+    <div>
+        <p>5. 선순위 금융사(시중은행, 보험사 외 불가)</p>
+        <button>시중은행 또는 보험사</button>
+        <button class="wrong_btn">그외</button>
+    </div>
+    <div>
+        <p>6. 담제자, 채무자 만 나이 65세 미만 여부★(담제자만)</p>
+        <button>네</button>
+        <button class="wrong_btn">아니요</button>
+    </div>
+    <div>
+        <p>7. 세입자 여부(월세, 전세; 월세 불가)</p>
+        <button>없음</button>
+        <button>전세</button>
+        <button class="wrong_btn">월세</button>
+    </div>
+    <div>
+        <!-- 7번 전세 일때만 펼쳐지게 자바스크립트 적용 -->
+        <p>8. 세입자 동의 여부</p>
+        <button>네</button>
+        <button class="wrong_btn">아니요</button>
+    </div>
+    <div>
+        <!-- 7번 전세, 8번 동의 네 일때만 펼쳐지게 자바스크립트 적용 -->
+        <p>9. 세입자, 은행 뒤 3순위 불가</p>
+        <button class="wrong_btn">선순위 세입자, 은행</button>
+        <button>세입자만 있음</button>
+    </div>
+    <div>
+        <p>10. KB시세(주소 넣으면 바로 KB시세 연결되서 확인할 수 있어야 함)</p>
+        <input type="number" min="10000" placeholder="최소 시세 #억(일반가/하한가 주의)">
+    </div>
+    <div>
+        <p>11. 기존 설정액(대출, 보증금; 여러 개 추가할 수 있어야 함)★</p>
+        <input type="number" placeholder="선순위 설정액 or 보증금">
+        <!-- 하나 입력하면 자동으로 아래에 하나 추가되는 자바스크립트 적용 -->
+    </div>
+    <div>
+        <p>10~11번만 숫자 자료 넣는 거고 나머지는 boolean</p>
+    </div>
+
     <!-- 등기 넣으면 KB시세, 기존대출 설정액, 지역, 공급면적, 담제자 나이, 바로 나올 수 있어야 함-->
 
 </body>
+
+<script>
+    <!-- Y/N 질문에서 불가 일 때 뜨는 alert -->
+
+    $(document).ready(function (){
+        alert("한도계산페이지입니다!")
+    })
+
+    $(".wrong_btn").click((function (){
+        alert("대출진행불가")
+    }))
+
+
+</script>
+
 </html>
